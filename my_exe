@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+class MyInfArith:
+    def __init__(self,args):
+        if len(args) !=4:
+            print("Usage pattern: ./my_exe.py int/float add/sub/mul/div operand1 operand2")
+            return
+        
+        self.args=args
+        self.compile_and_run()
+    
+    def compile_and_run(self):
+        compile_status = os.system(f"javac arbitraryarithmetic/*.java MyInfArith.java")
+        if compile_status != 0:
+            print("Compilation failed.")
+            return
+        run_cmd = f"java -cp . MyInfArith {' '.join(self.args)}"
+        os.system(run_cmd)
+
+if __name__=="__main__":
+    MyInfArith(sys.argv[1:])
