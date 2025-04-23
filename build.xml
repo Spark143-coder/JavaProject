@@ -1,0 +1,12 @@
+<project name = "Arbitrary Arithmetic Operations" default = "jar" basedir = ".">
+    <property name="arbitraryarithmetic.dir" value="arbitraryarithmetic/"/>
+    <property name="jar.name" value="aarithmetic.jar"/>
+    <target name="compile">
+        <javac srcdir="${arbitraryarithmetic.dir}" destdir="${arbitraryarithmetic.dir}"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.name}" basedir="${arbitraryarithmetic.dir}">
+        </jar>
+    </target>
+</project>
