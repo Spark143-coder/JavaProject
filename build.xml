@@ -9,4 +9,7 @@
         <jar destfile="${jar.name}" basedir="${arbitraryarithmetic.dir}">
         </jar>
     </target>
+    <target name="clean">
+        <delete file="${jar.name}"/>
+    </target>
 </project>
