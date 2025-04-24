@@ -47,6 +47,30 @@ public class AFloat {
         return value;
     }
 
+    public String remove_extra_zeroes(String str){
+        AFloat temp = AFloat.parse(str);
+        if(temp.decimal_point()){
+            if(temp.decimal_digits()==1){
+                return str;
+            }
+            else {
+                int index=str.length()-temp.decimal_digits();
+                for(int i=str.length()-1;i>str.length()-temp.decimal_digits();i--){
+                    if(str.charAt(i)!='0'){
+                        index=i;
+                        break;
+                    }
+                }
+                String new_str="";
+                for(int i=0;i<index+1;i++){
+                    new_str+=str.charAt(i);
+                }
+                return new_str;
+            }
+        }
+        return str;
+    }
+
     public AFloat add(AFloat other){
         String operand_1 = this.get();
         String operand_2 = other.get();
@@ -257,6 +281,7 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(fin_copy);
+        result.set(remove_extra_zeroes(fin_copy));
         return result;
     }
 
@@ -468,6 +493,7 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(fin_copy);
+        result.set(remove_extra_zeroes(fin_copy));
         return result;
     }
 
@@ -593,6 +619,7 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(fin_copy);
+        result.set(remove_extra_zeroes(fin_copy));
         return result;
     }
 
@@ -818,6 +845,7 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(updated_fin);
+        result.set(remove_extra_zeroes(updated_fin));
         return result;
     }
 }
