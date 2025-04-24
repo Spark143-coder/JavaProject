@@ -686,8 +686,8 @@ public class AFloat {
         String deci="";
         String remainder = rem.get();
         int compare;
-        if(1000+diff>0){
-            compare=1000+diff;
+        if(30+diff>0){
+            compare=30+diff;
         }
         else {
             compare=0;
