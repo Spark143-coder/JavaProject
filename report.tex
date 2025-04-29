@@ -1,0 +1,297 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{SDF JAVA PROJECT}
+\author{H VASANT KUMAR}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Objective}
+\begin{itemize}
+    \item Implementation of an infinite/arbitrary-precision arithmetic library in Java using OOP concepts.
+    \item If you are given two strings as input, you need to add support for addition, subtraction, multiplication, and division, for both integer and float data types.
+    \item Ensure efficient memory management when dealing with large integers and floating-point numbers, especially when performing operations on large datasets or long-precision numbers.
+    \item  Implement a mechanism to define the precision of the arithmetic operations.
+    \item Safely handle very large numbers and overflow scenarios.
+\end{itemize}
+
+\section*{Library Specification}
+It has a package called \texttt{arbitraryarithmetic} which consists of two classes \texttt{AInteger} and \texttt{AFloat}.
+
+\section*{AInteger.java / Integer class}
+I created a directory named \texttt{arbitraryarithmetic}. Inside this directory, I created the file \texttt{AInteger.java}. To make it a package, I included the statement \texttt{package arbitraryarithmetic;} at the top of the file.
+
+\subsection*{Properties or members}
+It has a protected member named \texttt{'num'} of type String.
+
+\subsection*{Constructors}
+\begin{itemize}
+    \item Default constructor \texttt{AInteger()} that initializes the instance with value 0.
+    \item Constructor \texttt{AInteger(String num)} that initializes the instance by the number whose string representation is given by 'num'.
+    \item Copy constructor that creates an instance of \texttt{AInteger}.
+\end{itemize}
+
+\subsection*{Methods / Functions}
+\begin{description}
+    \item[\texttt{parse(String num)}] A static function that returns an instance of \texttt{AInteger} class.
+    \item[\texttt{get()}] Returns the object's member which is "num".
+    \item[\texttt{set(String num)}] Sets the object's member which is "num".
+    \item[\texttt{remove\_leading\_zero(String num)}] Removes the extra unnecessary leading zeroes.
+    \item[\texttt{add(AInteger other)}] Adds integers of arbitrary length.
+    \item[\texttt{sub(AInteger other)}] Subtracts integers of arbitrary length.
+    \item[\texttt{mul(AInteger other)}] Multiplies integers of arbitrary length.
+    \item[\texttt{div(AInteger other)}] Divides integers of arbitrary length.
+\end{description}
+
+\subsection*{Deeper into the methods}
+\subsubsection*{\texttt{add(AInteger other)}}
+\begin{itemize}
+    \item I first eliminated leading zeros from both operands to ensure accurate numerical representation and comparison.
+    \item This function adds any two integers, whether positive or negative.
+    \item I initially ensured it worked correctly for positive integers.
+    \item I Implemented manual addition by iterating through digits from right to left (least to most significant), simulating arithmetic by hand.
+    \item The numbers are processed in a while loop, where each digit is added starting from the unit's place.
+    \item Manages and propagates carry values accurately during each step of the digit-wise addition process.
+    \item Accommodates operands of different lengths by continuing the addition with remaining digits of the longer operand once the shorter is exhausted.
+    \item Accumulates the result in reverse order and subsequently reverses it to obtain the final correctly ordered result.
+    \item Handles any leftover carry after completing digit-wise addition by appending it to the final result string.
+    \item Prepends a negative sign to the result if both original operands were negative, preserving mathematical correctness.
+    \item It initially detects scenarios where the operands have opposing signs and transforms the operation into a subtraction of absolute values.
+    \item Finally, I passed the result to a function that removes any leading zeros.
+    \item Returns a new \texttt{AInteger} object encapsulating the final computed result, conforming to the class's design contract.
+    \item Supports addition of arbitrarily large integers by performing all operations at the string level, circumventing native data type limitations.
+\end{itemize}
+
+\subsubsection*{\texttt{sub(AInteger other)}}
+\begin{itemize}
+    \item First, removes any leading zeroes from both numbers to make sure the values are clean and accurate.
+    \item As with addition, I initially implemented subtraction for positive integers.
+    \item If both numbers are exactly the same, the result is zero.
+    \item I compared the inputs to determine whether the result should be positive or negative.
+    \item Stores a flag to keep track of whether the result should have a minus sign or not
+    \item The subtraction was performed by subtracting the smaller number from the larger one.
+    \item Performs subtraction digit by digit starting from the rightmost digit (like in manual subtraction)
+    \item If a digit in the first number is smaller than the digit being subtracted, it borrows from the next digit.
+    \item Keeps subtracting digits until all digits in both numbers are used up.
+    \item Reverses the result string since digits were added from right to left during subtraction. 
+    \item Depending on the earlier comparison, I prefixed the result with a minus sign if necessary.
+    \item If both inputs were negative, I simply reversed the order of the operands before performing the subtraction.
+    \item If the first number is negative and the second is positive, it adds the magnitudes and puts a minus sign in front of the result.
+    \item If the first number is positive and the second is negative, it simply adds the two magnitudes (because subtracting a negative is like adding).
+    \item Finally, I passed the result to a function that removes any leading zeros.
+    \item Creates and returns a new \texttt{AInteger} object with the final result.
+\end{itemize}
+
+\subsubsection*{\texttt{mul(AInteger other)}}
+\begin{itemize}
+    \item Removes any leading zeroes from both input numbers to clean them up.
+    \item If either number is zero, the result is immediately zero.
+    \item I initially implemented multiplication for positive integers, building upon the logic used for addition and subtraction.
+    \item Initializes an empty result that will hold the final answer.
+    \item Loops through each digit of the second number from left to right.
+    \item For each digit
+    \begin{itemize}
+        \item Converts the character digit to an integer
+        \item Creates a temporary result by adding the first number to itself 'digit' number of times.
+        \item Appends the appropriate number of zeroes at the end to simulate multiplication by powers of 10.
+    \end{itemize}
+    \item Adds the result of each digit’s multiplication to the running total.
+    \item If both input numbers were negative, I multiplied their absolute values.
+    \item If only one of the inputs was negative, I multiplied their absolute values and prefixed the result with a minus sign.
+    \item Finally, the result was passed through a function to remove any leading zeros before returning it.
+    \item Returns the result wrapped inside a new \texttt{AInteger} object.
+\end{itemize}
+
+\subsubsection*{\texttt{div(AInteger other)}}
+\begin{itemize}
+    \item As with other arithmetic operations, I first removed any leading zeros from the inputs.
+    \item Then, I removed the negative signs so it can just work with magnitudes.
+    \item I checked if the divisor was zero and, if so, threw an error to handle division by zero.
+    \item If the dividend was zero, I immediately returned zero as the result.
+    \item If divisor is 1, the result is just the dividend.
+    \item If both are equal, the result is 1.
+    \item If divisor is larger than dividend, result is 0.
+    \item I then implemented the long division algorithm for performing the division.
+    \item I take one digit at a time from the dividend:
+    \item The code builds a string \texttt{comp} to represent a part of the dividend being divided.
+    \item For each digit in the dividend:
+        \begin{itemize}
+            \item Adds the digit to \texttt{comp}.
+            \item If \texttt{comp} is still smaller than the divisor, adds "0" to the result and continues.
+            \item Otherwise, finds the largest digit (0 to 9) such that $ \text{divisor} \times \text{digit} \leq \texttt{comp} $
+            \item Adds that digit to the final answer string \texttt{fin}.
+            \item Subtracts divisor $\times$ digit from \texttt{comp} and updates it.
+        \end{itemize}
+    \item If both input numbers were negative, I divided their absolute values.
+    \item If only one of the inputs was negative, I divided their absolute values and prefixed the result with a minus sign.
+    \item Finally, the result was passed through a function to remove any leading zeros before returning it.
+    \item I wrapped the result into a new \texttt{AInteger} and returns it.
+\end{itemize}
+
+\section*{AFloat.java / Float class}
+I created the file \texttt{AFloat.java} inside the \texttt{arbitraryarithmetic} directory. To include it in the same package, I added the statement \texttt{package arbitraryarithmetic;} at the top of the file.
+
+\subsection*{Properties or Members}
+It has a protected member named \texttt{'num'} of type String.
+
+\subsection*{Constructors}
+\begin{itemize}
+    \item Default constructor \texttt{AFloat()} that initializes the instance with value 0.0.
+    \item Constructor \texttt{AFloat(String num)} that initializes the instance by the number whose string representation is given by 'num'.
+    \item Copy constructor that creates an instance of \texttt{AFloat}.
+\end{itemize}
+
+\subsection*{Methods / Functions}
+\begin{description}
+    \item[\texttt{parse(String num)}] A static function that returns an instance of \texttt{AFloat} class.
+    \item[\texttt{get()}] Returns the member of the object.
+    \item[\texttt{set(String num)}] Sets the member of the object to \texttt{num}.
+    \item[\texttt{decimal\_digits()}] Returns the number of decimal digits of their member.
+    \item[\texttt{decimal\_point()}] Confirms whether the member has decimal point.
+    \item[\texttt{remove\_extra\_zeroes(String str)}] Function which removes extra zeroes at the end of decimal places.
+    \item[\texttt{add(AFloat other)}] Adds any two floating-point numbers of arbitrary length.
+    \item[\texttt{sub(AFloat other)}] Subtracts any two floating-point numbers of arbitrary length.
+    \item[\texttt{mul(AFloat other)}] Multiplies any two floating-point numbers of arbitrary length.
+    \item[\texttt{div(AFloat other)}] Divides any two floating-point numbers of arbitrary length.
+    \item[\texttt{truncate(String str)}] Truncates the result to 30 decimal places.
+\end{description}
+
+\subsection*{A deeper look into methods}
+\subsubsection*{\texttt{add(AFloat other)}}
+\begin{itemize}
+    \item It implements the \texttt{add()} method in \texttt{AFloat.java} to perform addition of two floating-point numbers represented as strings.
+    \item First, It ensures both numbers are in a proper floating-point format
+    \item If a number didn't already contain a decimal point, It appends one to ensure consistent processing.
+    \item It calculates the decimal lengths of both operands using the \texttt{decimal\_digits()} method.
+    \item If both operands had the same number of digits after the decimal:
+        \begin{itemize}
+            \item It removes the decimal points and adds the integer parts of the numbers.
+            \item The result is then formatted by inserting the decimal point at the correct position based on the original decimal length.
+        \end{itemize}
+    \item If operand 1 has a greater decimal length than operand 2:
+        \begin{itemize}
+            \item It pads operand 2 with zeros to match the decimal length of operand 1.
+            \item The result is calculated in the same way as the equal decimal length case.
+        \end{itemize}
+    \item If operand 2 has a greater decimal length than operand 1:
+        \begin{itemize}
+            \item It pads operand 1 with zeros to match the decimal length of operand 2.
+            \item The result is calculated in the same way as the equal decimal length case.
+        \end{itemize}
+    \item After the addition of the integer parts, it handles the following:
+        \begin{itemize}
+            \item If the result has more digits than the original decimal length, it inserts the decimal point at the proper position.
+            \item If the result has fewer digits, it adds the necessary number of leading zeros before the decimal point.
+            \item If the result is negative, the negative sign is handled and inserted properly.
+        \end{itemize}
+    \item After constructing the result string, It removes any unnecessary leading zeroes and uses the \texttt{remove\_extra\_zeroes()} and \texttt{truncate()} functions to clean up the result before returning it.
+    \item Finally, it wraps the result into a new \texttt{AFloat} object and returns it.
+\end{itemize}
+
+\subsubsection*{\texttt{sub(AFloat other)}}
+\begin{itemize}
+    \item Convert both operands to strings and ensure they have a decimal point.
+    \item If either operand doesn't have a decimal point, it adds one.
+    \item It calculates the decimal lengths of both operands using the \texttt{decimal\_digits()} method.
+    \item If both operands have equal decimal lengths:
+        \begin{itemize}
+            \item It removes the decimal points and performs subtraction by treating the numbers as integers.
+            \item The result is then formatted, ensuring the decimal point is inserted correctly based on the original decimal length.
+            \item If the result has more digits than the decimal length, the decimal point is inserted at the correct position.
+            \item If the result is negative, the negative sign is handled properly and inserted in the correct place.
+            \item If the result is smaller than the decimal length, zeroes are padded as required.
+        \end{itemize}
+    \item If the decimal lengths are not equal:
+        \begin{itemize}
+            \item The operand with the smaller decimal length is padded with zeros to make both lengths equal.
+            \item Subtraction is then performed as before, with proper formatting of the result, including zero padding where necessary.
+        \end{itemize}
+    \item It removes unnecessary leading zeros.
+    \item It ensures no trailing zeros remain using the \texttt{remove\_extra\_zeroes()} method.
+    \item It returns the final result as a new \texttt{AFloat} object.
+\end{itemize}
+
+\subsubsection*{\texttt{mul(AFloat other)}}
+\begin{itemize}
+    \item Convert both operands to strings and ensure they contain a decimal point.
+    \item If either operand doesn't have a decimal point, it adds one.
+    \item It calculates the decimal lengths of both operands using the \texttt{decimal\_digits()} method
+    \item The decimal point is removed from both operands by converting them into integer-like strings.
+    \item Leading zeros are also removed from both operands before multiplication.
+    \item The operands are converted into \texttt{AInteger} objects and multiplied using \texttt{AInteger:: mul(AInteger odd)}.
+    \item The result is stored and processed based on the total number of decimal places:
+        \begin{itemize}
+            \item The total decimal length is the sum of the decimal lengths of both operands.
+            \item If the result has more digits than the total decimal length, the decimal point is inserted in the correct position.
+            \item If the result has fewer digits than the total decimal length, it pads the result with leading zeros and places the decimal point correctly.
+        \end{itemize}
+    \item If the result is negative, the negative sign is handled properly and inserted in the correct place, with additional formatting for the decimal point.
+    \item It removes unnecessary leading zeros.
+    \item It ensures no trailing zeros remain using the \texttt{remove\_extra\_zeroes()} method.
+    \item The result is truncated using the \texttt{truncate()} method to ensure the correct format.
+    \item Finally, it wraps the result into a new \texttt{AFloat} object and returns it.
+\end{itemize}
+
+\subsection*{\texttt{div(AFloat other)}}
+\begin{itemize}
+    \item First, it ensures both operands have a decimal point.
+    \item If either operand doesn't have a decimal point, \texttt{.0} is appended to it.
+    \item The operands are parsed into \texttt{AFloat} objects to determine their decimal lengths using the \texttt{decimal\_digits()} method.
+    \item The decimal points are removed by converting both operands into integer-like strings.
+    \item Leading zeros are removed from both operands before performing division.
+    \item The division operation is performed by using \texttt{AInteger :: div (AInteger other)} for both the quotient and the remainder.
+    \item If division by zero is attempted, an \texttt{IllegalArgumentException} is thrown.
+    \item If the first operand is zero, the result is zero.
+    \item The sign of the result is determined by the signs of the operands:
+        \begin{itemize}
+            \item If one operand is negative, the result will be negative.
+            \item If both operands are negative, the result will be positive.
+        \end{itemize}
+    \item The remainder is computed and processed to remove any negative sign and ensure it is handled correctly during division.
+    \item The long division method is implemented to compute the result up to 30 decimal places:
+        \begin{itemize}
+            \item The remainder is repeatedly divided by the divisor, and the quotient is appended to the decimal part of the result.
+            \item If the remainder becomes zero, the loop terminates.
+        \end{itemize}
+    \item he result is formatted correctly:
+        \begin{itemize}
+            \item The quotient and the decimal part are concatenated.
+            \item If there are extra zeros, they are added or removed as necessary, and the decimal point is inserted in the correct position.
+        \end{itemize}
+    \item If the result is negative, the minus sign is handled correctly, and the number is formatted accordingly.
+    \item Leading zeros are removed from the result using a custom method to ensure the correct formatting.
+    \item After the result is calculated, it is verified by multiplying it back with the divisor to ensure no extra zeros are present. If necessary, extra zeros are removed.
+    \item The final result is returned as an \texttt{AFloat} object.
+\end{itemize}
+
+\section*{MyInfArith.java}
+\begin{itemize}
+    \item It is a Java file that imports the package and runs test cases.
+    \item It ensures that the input passed is only an integer or a float.
+    \item It takes command-line arguments and performs arithmetic operations.
+\end{itemize}
+
+\section*{my\_exe}
+\begin{itemize}
+    \item It is a Python script used to run test cases.
+    \item It uses \texttt{MyInfArith.java} to run the test cases.
+\end{itemize}
+
+\section*{build.xml}
+\begin{itemize}
+    \item Defines a project named \textbf{"Arbitrary Arithmetic Operations"} with the default target \texttt{jar}.
+    \item Sets both the source and build directories to the \textbf{current folder}, so \texttt{.class} files go alongside \texttt{.java} files.
+    \item The \texttt{compile} target compiles \texttt{arbitraryarithmetic/*.java} into the same directory.
+    \item The \texttt{jar} target creates \texttt{aarithmetic.jar} containing all \texttt{.class} files from the current directory tree.
+    \item The \texttt{clean} target deletes the \texttt{.jar} file and all \texttt{.class} files from the directory.
+\end{itemize}
+
+\section*{aarithmetic.jar}
+The \texttt{aarithmetic.jar} library can be linked to any \textbf{executable/library}.
+
+
+\end{document}
