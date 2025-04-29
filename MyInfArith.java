@@ -6,6 +6,45 @@ public class MyInfArith{
         if(args[0].equals("int")){
             AInteger operand_1 = AInteger.parse(args[2]);
             AInteger operand_2 = AInteger.parse(args[3]);
+            boolean value = false;
+            for(int i=0;i<operand_1.get().length();i++){
+                int ascii = (int) operand_1.get().charAt(i);
+                if(i==0){
+                    if(ascii==45 || (ascii >=48 && ascii<=57))continue;
+                    else {
+                        value=true;
+                        break;
+                    }
+                }
+                else{
+                    if((ascii >=48 && ascii<=57))continue;
+                    else {
+                        value=true;
+                    }
+                }
+            }
+            if(value){
+                throw new IllegalArgumentException("The input should be integer only");
+            }
+            for(int i=0;i<operand_2.get().length();i++){
+                int ascii = (int) operand_2.get().charAt(i);
+                if(i==0){
+                    if(ascii==45 || (ascii >=48 && ascii<=57))continue;
+                    else {
+                        value=true;
+                        break;
+                    }
+                }
+                else{
+                    if((ascii >=48 && ascii<=57))continue;
+                    else {
+                        value=true;
+                    }
+                }
+            }
+            if(value){
+                throw new IllegalArgumentException("The input should be integer only");
+            }
             if(args[1].equals("add")){
                 System.out.println(operand_1.add(operand_2).get());
             }
@@ -27,6 +66,45 @@ public class MyInfArith{
         else if(args[0].equals("float")){
             AFloat operand_1=AFloat.parse(args[2]);
             AFloat operand_2=AFloat.parse(args[3]);
+            boolean value = false;
+            for(int i=0;i<operand_1.get().length();i++){
+                int ascii = (int) operand_1.get().charAt(i);
+                if(i==0){
+                    if(ascii==45 || (ascii >=48 && ascii<=57)||ascii==46)continue;
+                    else {
+                        value=true;
+                        break;
+                    }
+                }
+                else{
+                    if((ascii >=48 && ascii<=57)|| ascii==46)continue;
+                    else {
+                        value=true;
+                    }
+                }
+            }
+            if(value){
+                throw new IllegalArgumentException("The input should be float only");
+            }
+            for(int i=0;i<operand_2.get().length();i++){
+                int ascii = (int) operand_2.get().charAt(i);
+                if(i==0){
+                    if(ascii==45 || (ascii >=48 && ascii<=57)||ascii==46)continue;
+                    else {
+                        value=true;
+                        break;
+                    }
+                }
+                else{
+                    if((ascii >=48 && ascii<=57)|| ascii==46)continue;
+                    else {
+                        value=true;
+                    }
+                }
+            }
+            if(value){
+                throw new IllegalArgumentException("The input should be float only");
+            }
             if(args[1].equals("add")){
                 System.out.println(operand_1.add(operand_2).get());
             }
