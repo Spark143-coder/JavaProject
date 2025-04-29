@@ -70,7 +70,19 @@ public class AFloat {
         }
         return str;
     }
-
+    public String truncate(String str){
+        String new_str="";
+        int count=-1;
+        for(int i=0;i<str.length();i++){
+            new_str+=str.charAt(i);
+            if(str.charAt(i)=='.')count++;
+            else {
+                if(count>=0)count++;
+            }
+            if(count>=30)break;
+        }
+        return new_str;
+    }
     public AFloat add(AFloat other){
         String operand_1 = this.get();
         String operand_2 = other.get();
@@ -289,6 +301,7 @@ public class AFloat {
         }
         AFloat result = new AFloat(fin_copy);
         result.set(remove_extra_zeroes(fin_copy));//remove the extra zeroes at the end
+        result.set(truncate(result.get()));//truncate
         return result;
     }
 
@@ -508,6 +521,7 @@ public class AFloat {
         }
         AFloat result = new AFloat(fin_copy);
         result.set(remove_extra_zeroes(fin_copy));//removing the last extra zeroes at the end
+        result.set(truncate(result.get()));//truncate
         return result;
     }
 
@@ -638,6 +652,7 @@ public class AFloat {
         }
         AFloat result = new AFloat(fin_copy);
         result.set(remove_extra_zeroes(fin_copy));//remove the extra zeroes at the end
+        result.set(truncate(result.get()));//truncate
         return result;
     }
 
@@ -867,7 +882,7 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(updated_fin);
-        AFloat checker = result.mul(other);
+        AFloat checker = result.mul(other);//check for if to remove extra zero
         if(checker.get().equals(operand_1_copy.get())){
             result.set(remove_extra_zeroes(updated_fin));//remove extra zeroes
         }
