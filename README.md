@@ -148,4 +148,29 @@ To include it in the same package, I added the statement `package arbitraryarith
 
 ## `MyInfArith.java`
 
-It is a Java file which imports the package and runs...
+It is a Java file which imports the package and runs test cases.  
+It ensures that the input passed is only integer or float.  
+It takes command line arguments and performs arithmetic operations.
+
+---
+
+## `my_exe`
+
+It is a Python script used to run test cases.  
+It uses `MyInfArith.java` to run test cases.
+
+---
+
+## `build.xml`
+
+- Defines a project named **"Arbitrary Arithmetic Operations"** with default target `jar`.
+- Sets both source and build directories to the **current folder**, so `.class` files go alongside `.java` files.
+- `compile` target compiles `arbitraryarithmetic/*.java` into the same directory.
+- `jar` target creates `aarithmetic.jar` containing all `.class` files from the current directory tree.
+- `clean` target deletes the `.jar` file and all `.class` files from the directory.
+
+---
+
+## `aarithmetic.jar`
+
+The `aarithmetic.jar` library which can be linked to any **executable/library**.
