@@ -268,6 +268,11 @@ public class AInteger {
         String operand_2=other.get();
         operand_1=remove_leading_zero(operand_1);//Removing the leading zeroes
         operand_2=remove_leading_zero(operand_2);
+        if(operand_2.equals("0")||operand_1.equals("0")||operand_1.equals("-0")||operand_2.equals("-0")){
+            //If at least one of them is 0 then answer is zero
+            AInteger result = new AInteger();
+            return result;
+        }
         int pos=1;//Variable for sign of the result
         if(operand_1.charAt(0) == '-'|| operand_2.charAt(0)=='-'){
             if(operand_1.charAt(0) == '-'&& operand_2.charAt(0)=='-'){
@@ -290,11 +295,6 @@ public class AInteger {
                 }
                 operand_2=mod;
             }
-        }
-        if(operand_2=="0"||operand_1=="0"){
-            //If at least one of them is 0 then answer is zero
-            AInteger result = new AInteger();
-            return result;
         }
         AInteger this_copy = new AInteger(operand_1);// Creating copy of first operand
         int length2 = operand_2.length();
