@@ -1,15 +1,20 @@
-<project name = "Arbitrary Arithmetic Operations" default = "jar" basedir = ".">
-    <property name="arbitraryarithmetic.dir" value="arbitraryarithmetic/"/>
+<project name="Arbitrary Arithmetic Operations" default="jar" basedir=".">
+    <property name="src.dir" value="."/>
+    <property name="build.dir" value="."/> <!-- Set the build directory to the source directory -->
     <property name="jar.name" value="aarithmetic.jar"/>
+
     <target name="compile">
-        <javac srcdir="${arbitraryarithmetic.dir}" destdir="${arbitraryarithmetic.dir}"/>
+        <javac srcdir="${src.dir}" includes="arbitraryarithmetic/*.java" destdir="${src.dir}" includeantruntime="false"/>
     </target>
 
     <target name="jar" depends="compile">
-        <jar destfile="${jar.name}" basedir="${arbitraryarithmetic.dir}">
-        </jar>
+        <jar destfile="${jar.name}" basedir="${src.dir}" includes="**/*.class"/>
     </target>
+
     <target name="clean">
         <delete file="${jar.name}"/>
+        <delete>
+            <fileset dir="${src.dir}" includes="**/*.class"/> <!-- Remove class files from the source directory -->
+        </delete>
     </target>
 </project>
