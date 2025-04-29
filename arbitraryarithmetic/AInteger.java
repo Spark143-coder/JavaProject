@@ -22,7 +22,7 @@ public class AInteger {
         this.num = num;
     }
 
-    public static AInteger parse(String num){ //Returns the num varaible Encapsulation
+    public static AInteger parse(String num){ //Returns the num variable Encapsulation
         return new AInteger(num);
     }
 
