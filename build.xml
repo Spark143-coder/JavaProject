@@ -1,6 +1,6 @@
 <project name="Arbitrary Arithmetic Operations" default="jar" basedir=".">
     <property name="src.dir" value="."/>
-    <property name="build.dir" value="."/> <!-- Set the build directory to the source directory -->
+    <property name="build.dir" value="."/>
     <property name="jar.name" value="aarithmetic.jar"/>
 
     <target name="compile">
@@ -14,7 +14,7 @@
     <target name="clean">
         <delete file="${jar.name}"/>
         <delete>
-            <fileset dir="${src.dir}" includes="**/*.class"/> <!-- Remove class files from the source directory -->
+            <fileset dir="${src.dir}" includes="**/*.class"/>
         </delete>
     </target>
 </project>
