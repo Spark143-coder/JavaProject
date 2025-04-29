@@ -867,7 +867,10 @@ public class AFloat {
             }
         }
         AFloat result = new AFloat(updated_fin);
-        result.set(remove_extra_zeroes(updated_fin));//remove extra zeroes at the end
+        AFloat checker = result.mul(other);
+        if(checker.get().equals(operand_1_copy.get())){
+            result.set(remove_extra_zeroes(updated_fin));//remove extra zeroes
+        }
         return result;
     }
 }
