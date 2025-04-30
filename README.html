@@ -197,10 +197,14 @@
         <p>It is a java file which imports package and runs testcases.</p>
         <p>It makes sure that input passed is only integer or float.</p>
         <p>It takes command line arguments and performs arithmetic operations/</p>
+        <p>Using MyInfArith.java</p>
+        <p>First, compile using the command <code>javac MyInfArith.java arbitraryarithmetic/*.java</code></p>
+        <p>Then, run the program using: <code>java MyInfArith int/float add/sub/mul/div operand\_1 operand\_2</code></p>
         <br>
         <h2><code>my_exe</code></h2>
         <p>It is python script which is used to run testcases</p>
         <p>It uses <code>MyInfArith.java</code> to run testcases</p>
+        <p>You can run the python script using the command: <code>./my\_exe int/float add/sub/mul/div operand1 operand2</code></p>
         <br>
         <h2><code>build.xml</code></h2>
         <ul>
@@ -209,9 +213,23 @@
             <li><code>compile</code> target compiles <code>arbitraryarithmetic/*.java</code> into the same directory.</li>
             <li><code>jar</code> target creates <code>aarithmetic.jar</code> containing all <code>.class</code> files from the current directory tree.</li>
             <li><code>clean</code> target deletes the <code>.jar</code> file and all <code>.class</code> files from the directory.</li>
+            <li>You use the command <code>ant jar</code> to build the jar file while <code>ant clean</code> to clean up files.</li>
         </ul>
         <br>
         <h2><code>aarithmetic.jar</code></h2>
         <p>The <code>aarithmetic.jar</code> library which can be linked to any <b>executable/library</b>.</p>
+        <p>To use this JAR File in your Java Program:</p>
+        <ul>
+            <li>Ensure that <code>aarithmetic.jar</code> is in the same directory as your Java file or provide the correct path to it.</li>
+            <li>Use <code>import arbitraryarithmetic.AInteger;</code> and <code>import arbitraryarithmetic.AFloat;</code> at the beginning of your Java file to access the library's classes.</li>
+        </ul>
+        <p>To compile your java File</p>
+        <ul>
+            <li>Run the command java -cp <code>.:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand2</code></li>
+        </ul>
+        <p>To run the compiled java program</p>
+        <ul>
+            <li>Run the command <code>java -cp .:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand</code></li>
+        </ul>
     </body>
 </html>
