@@ -158,6 +158,10 @@ To include it in the same package, I added the statement `package arbitraryarith
 
   ```bash
   javac MyInfArith.java arbitraryarithmetic/*.java
+
+- Then, run the compiled java file using the command:
+  ```bash
+  java MyInfArith int/float add/sub/mul/div operand_1 operand_2
 ---
 
 ## `my_exe`
@@ -184,4 +188,18 @@ To include it in the same package, I added the statement `package arbitraryarith
 
 ## `aarithmetic.jar`
 
-The `aarithmetic.jar` library which can be linked to any **executable/library**.
+- The `aarithmetic.jar` library can be linked to any **executable/library**.
+
+### To use this JAR file in your Java program:
+
+- Ensure that `aarithmetic.jar` is in the same directory as your Java file or provide the correct path to it.
+- Use the following import statements at the beginning of your Java file to access the library's classes:
+  ```java
+  import arbitraryarithmetic.AInteger;
+  import arbitraryarithmetic.AFloat;
+
+- To compile the java File
+  ```bash javac -cp .:aarithmetic.jar MyInfArith.java
+
+- To run the code
+  ```bash java -cp .:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand2
