@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
 
 \title{SDF JAVA PROJECT}
 \author{H VASANT KUMAR}
@@ -257,7 +259,7 @@ It has a protected member named \texttt{'num'} of type String.
             \item The remainder is repeatedly divided by the divisor, and the quotient is appended to the decimal part of the result.
             \item If the remainder becomes zero, the loop terminates.
         \end{itemize}
-    \item he result is formatted correctly:
+    \item The result is formatted correctly:
         \begin{itemize}
             \item The quotient and the decimal part are concatenated.
             \item If there are extra zeros, they are added or removed as necessary, and the decimal point is inserted in the correct position.
@@ -271,14 +273,68 @@ It has a protected member named \texttt{'num'} of type String.
 \section*{MyInfArith.java}
 \begin{itemize}
     \item It is a Java file that imports the package and runs test cases.
-    \item It ensures that the input passed is only an integer or a float.
-    \item It takes command-line arguments and performs arithmetic operations.
+    \item The program begins by checking whether the first argument is \texttt{int} or \texttt{float} to determine the type of arithmetic operation.
+    \item If the first argument is \texttt{int}
+        \begin{itemize}
+            \item Both operands are parsed using \texttt{AInteger.parse()}.
+            \item Each character of the operands is validated to ensure it represents an integer.
+            \item The first character may be a minus sign ($ - $) or a digit.
+            \item Subsequent characters must all be digits.
+            \item If any invalid character is found, an \texttt{IllegalArgumentException} is thrown.
+            \item Depending on the second argument, one of the following operations is performed using the \texttt{AInteger} class:
+                \begin{itemize}
+                    \item \texttt{add} for addition
+                    \item \texttt{sub} for subtraction
+                    \item \texttt{mul} for multiplication
+                    \item \texttt{div} for division
+                \end{itemize}
+            \item The result is printed using \texttt{get()}.
+            \item If the second argument is invalid, an error message is printed describing the correct usage.
+        \end{itemize}
+    \item If the first argument is \texttt{float}
+        \begin{itemize}
+            \item Both operands are parsed using \texttt{AFloat.parse()}.
+            \item Each character of the operands is validated to ensure it represents a floating-point number.
+            \item The first character may be a minus sign (<code>'-'</code>), a digit, or a decimal point.
+            \item All subsequent characters must be digits or a decimal point.
+            \item If any invalid character is found, an \texttt{IllegalArgumentException} is thrown.
+            \item Based on the second argument, the corresponding arithmetic operation is performed using \texttt{AFloat} methods:
+                \begin{itemize}
+                    \item \texttt{add} for addition
+                    \item \texttt{sub} for subtraction
+                    \item \texttt{mul} for multiplication
+                    \item \texttt{div} for division
+                \end{itemize}
+            \item The result is displayed via the \texttt{get()} method.
+            \item If the second argument is not one of the supported operations, an error message with usage instructions is shown.
+        \end{itemize}
+    \item If the first argument is neither \texttt{int} nor \texttt{float}, an error message is printed showing the correct usage syntax.
+    \item How to use MyInfArith.java
+    \begin{itemize}
+        \item First, compile \texttt{MyInfArith.java} along with \texttt{AInteger.java} and \texttt{AFloat.java}.
+        \item Use the command: \texttt{javac MyInfArith.java arbitraryarithmetic/*.java}
+        \item Then, run the program using: \texttt{java MyInfArith int/float add/sub/mul/div operand\_1 operand\_2}
+        \item Replace \texttt{int/float} with either \texttt{int} or \texttt{float}, depending on the operand type.
+        \item Replace \texttt{add/sub/mul/div} with the desired operation.
+        \item Replace \texttt{operand\_1} and \texttt{operand\_2} with your actual numeric values (e.g., \texttt{-12}, \texttt{3.14}).
+    \end{itemize}
 \end{itemize}
 
 \section*{my\_exe}
 \begin{itemize}
     \item It is a Python script used to run test cases.
     \item It uses \texttt{MyInfArith.java} to run the test cases.
+    \item The script defines a class <code>MyInfArith</code> that is initialized with command-line arguments.
+    \item Inside \texttt{\_\_init\_\_}, it checks whether exactly four arguments are provided if not, it prints a usage pattern and exits.
+    \item If the argument count is correct, it proceeds to \texttt{compile\_and\_run}.
+    \item It uses the \texttt{os.system} command to compile all Java files in the \texttt{arbitraryarithmetic} directory along with \texttt{MyInfArith.java}.
+    \item If the compilation fails (i.e., the return code is non-zero), it prints \texttt{Compilation failed} and stops execution.
+    \item If compilation is successful then, It constructs the Java run command by joining the original four arguments with spaces.
+    \item The Java program is executed using \texttt{java -cp . MyInfArith ...} via \texttt{os.system}.
+    \item You can run the file from the command \texttt{./my\_exe int/float add/sub/mul/div operand1 operand2}.
+    \item Replace \texttt{int/float} with either \texttt{int} or \texttt{float}, depending on the operand type.
+    \item Replace \texttt{add/sub/mul/div} with the desired operation.
+    \item Replace \texttt{operand\_1} and \texttt{operand\_2} with your actual numeric values (e.g., \texttt{-12}, \texttt{3.14}).
 \end{itemize}
 
 \section*{build.xml}
@@ -288,10 +344,93 @@ It has a protected member named \texttt{'num'} of type String.
     \item The \texttt{compile} target compiles \texttt{arbitraryarithmetic/*.java} into the same directory.
     \item The \texttt{jar} target creates \texttt{aarithmetic.jar} containing all \texttt{.class} files from the current directory tree.
     \item The \texttt{clean} target deletes the \texttt{.jar} file and all \texttt{.class} files from the directory.
+    \item You can use the command \texttt{ant jar} to create the jar file.
+    \item You can use the command \texttt{ant clean} to delete the jar file.
 \end{itemize}
 
 \section*{aarithmetic.jar}
-The \texttt{aarithmetic.jar} library can be linked to any \textbf{executable/library}.
+\begin{itemize}
+    \item The \texttt{aarithmetic.jar} library can be linked to any \textbf{executable/library}.
+    \item Provides support for arbitrary-precision integer and floating-point arithmetic.
+    \item Can be imported and used in any Java project via the classpath or build tool.
+    \item Includes exception handling for common arithmetic errors.
+    \item Tested via \texttt{MyInfArith.java} with various edge cases and corner scenarios to ensure correctness.
+    \item To use this JAR File in your Java Program:
+        \begin{itemize}
+            \item Ensure that \texttt{aarithmetic.jar} is in the same directory as your Java file or provide the correct path to it.
+            \item Use \texttt{import arbitraryarithmetic.AInteger;} and \texttt{import arbitraryarithmetic.AFloat;} at the beginning of your Java file to access the library's classes.
+        \end{itemize}
+    \item To compile your Java file:
+        \begin{itemize}
+            \item Run the following command:
+            \item   \texttt{javac -cp aarithmetic.jar MyInfArith.java}.
+            \item This tells the compiler to include \texttt{aarithmetic.jar} in the classpath while compiling your program.
+        \end{itemize}
+    \item To run the compiled Java program:
+        \begin{itemize}
+            \item Use the following command:
+            \item   \texttt{java -cp .:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand2}
+            \item On Windows, replace the colon \texttt{:} with a semicolon \texttt{;} in the classpath:
+        \end{itemize}
+\end{itemize}
+    \section*{git commits}
+    \noindent
+\begin{center}
+\textbf{Git Commits}
+\end{center}
 
+\vspace{0.5em}
+\noindent
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss1.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss2.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss3.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss4.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss5.png}
+\end{minipage}
 
+\vspace{0.5em}
+
+\noindent
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss6.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss7.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss8.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss9.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss10.png}
+\end{minipage}
+
+\vspace{0.5em}
+
+\noindent
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss11.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss12.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss13.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss14.png}
+\includegraphics[width=0.18\textwidth]{/home/spark/Pictures/Screenshots/ss15.png}
+\end{minipage}
+    \section*{limitations}
+    \begin{itemize}
+        \item No support for special float values like \texttt{NaN,Infinity}.
+        \item Only supports add, sub, mul, and div. No modulo, power, square root, or advanced math.
+        \item The program prints errors directly rather than returning structured error types or exit codes.
+        \item Big integer/float operations are likely string-based and not optimized.
+        \item Performance degrades with input length. Operations on very large numbers (thousands of digits) will be slow.
+    \end{itemize}
+    \section*{Key Learnings}
+    \begin{itemize}
+        \item Learned how to design and implement reusable classes like \texttt{AInteger}, \texttt{AFloat}, and \texttt{MyInfArith}.
+        \item Understood the role of static methods (\texttt{like parse()}) for object creation.
+        \item Learned how to store and manipulate integers and floating-point numbers as strings.
+        \item Understood how to throw and catch exceptions \texttt{(IllegalArgumentException)} when inputs are invalid.
+        \item Learned how to compile multiple Java files and manage packages.
+        \item Understood how to compile code into a \texttt{.jar} and reuse it as a library using \texttt{-cp}.
+        \item Developed a Python script to automate Java compilation and execution, learning inter-language automation.
+        \item Improved debugging skills while testing operations on large or edge-case inputs.
+        \item Practiced documenting usage patterns, limitations, and class functionality (potentially in HTML or LaTeX).
+    \end{itemize}
 \end{document}
