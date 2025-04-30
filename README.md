@@ -199,7 +199,9 @@ To include it in the same package, I added the statement `package arbitraryarith
   import arbitraryarithmetic.AFloat;
 
 - To compile the java File
-  ```bash javac -cp .:aarithmetic.jar MyInfArith.java
+  ```bash
+  javac -cp .:aarithmetic.jar MyInfArith.java
 
 - To run the code
-  ```bash java -cp .:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand2
+  ```bash
+  java -cp .:aarithmetic.jar MyInfArith int/float add/sub/mul/div operand1 operand2
