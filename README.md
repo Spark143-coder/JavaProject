@@ -148,26 +148,37 @@ To include it in the same package, I added the statement `package arbitraryarith
 
 ## `MyInfArith.java`
 
-It is a Java file which imports the package and runs test cases.  
-It ensures that the input passed is only integer or float.  
-It takes command line arguments and performs arithmetic operations.
+- It is a Java file which imports the `arbitraryarithmetic` package and runs test cases.
+- It ensures that the input provided is either an integer or a float.
+- It takes command-line arguments and performs arithmetic operations.
 
+### Using `MyInfArith.java`
+
+- First, compile using the command:
+
+  ```bash
+  javac MyInfArith.java arbitraryarithmetic/*.java
 ---
 
 ## `my_exe`
 
-It is a Python script used to run test cases.  
-It uses `MyInfArith.java` to run test cases.
+- It is a Python script used to run test cases.
+- It internally uses `MyInfArith.java` to perform arithmetic operations.
+- You can run the Python script using the command:
+
+  ```bash
+  ./my_exe int/float add/sub/mul/div operand1 operand2
 
 ---
 
 ## `build.xml`
 
-- Defines a project named **"Arbitrary Arithmetic Operations"** with default target `jar`.
-- Sets both source and build directories to the **current folder**, so `.class` files go alongside `.java` files.
-- `compile` target compiles `arbitraryarithmetic/*.java` into the same directory.
-- `jar` target creates `aarithmetic.jar` containing all `.class` files from the current directory tree.
-- `clean` target deletes the `.jar` file and all `.class` files from the directory.
+- Defines a project named **"Arbitrary Arithmetic Operations"** with the default target `jar`.
+- Sets both source and build directories to the **current folder**, so `.class` files are generated alongside `.java` files.
+- The `compile` target compiles `arbitraryarithmetic/*.java` into the same directory.
+- The `jar` target creates `aarithmetic.jar` containing all `.class` files from the current directory tree.
+- The `clean` target deletes the `.jar` file and all `.class` files from the directory.
+- Use the command `ant jar` to build the jar file and `ant clean` to clean up the generated files.
 
 ---
 
