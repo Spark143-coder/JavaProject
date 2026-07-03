@@ -1,4 +1,4 @@
-# SDF JAVA PROJECT
+# Arbitrary Precision Arithmetic Library
 
 ## Objective
 
